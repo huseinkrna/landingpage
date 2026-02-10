@@ -25,6 +25,7 @@
     });
 
     document.addEventListener('click', (e) => {
+      if (!navMenu.classList.contains('nav-open')) return;
       if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
         closeMenu();
       }
@@ -60,6 +61,16 @@
       if (!target) return;
 
       e.preventDefault();
+      
+      // Close menu before measuring to get accurate collapsed height
+      if (navMenu && navMenu.classList.contains('nav-open')) {
+        navMenu.classList.remove('nav-open');
+        if (hamburger) {
+          hamburger.classList.remove('is-active');
+          hamburger.setAttribute('aria-expanded', 'false');
+        }
+      }
+      
       const topbarHeight = document.querySelector('.topbar')?.offsetHeight || 0;
       const targetPos = target.getBoundingClientRect().top + window.scrollY - topbarHeight - 12;
 
