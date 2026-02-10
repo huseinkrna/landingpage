@@ -8,11 +8,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles/style.css" />
+  <link rel="stylesheet" href="./styles/responsive.css" />
 </head>
 <body>
   <header class="topbar">
     <img class="brand logo" src="./images/logo.png" alt="Emha Cafe" />
-    <nav class="nav">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+    <nav class="nav" id="nav-menu">
       <a href="#menu">
         <span class="nav-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -501,21 +507,6 @@
     <p class="tiny">© 2026 Emha Cafe. Diracik dengan hangat.</p>
   </footer>
 
-  <script>
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const menuCards = document.querySelectorAll('.menu-card');
-
-    filterButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        filterButtons.forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        const category = btn.dataset.filter;
-        menuCards.forEach((card) => {
-          const match = category === 'all' || card.dataset.category === category;
-          card.style.display = match ? 'flex' : 'none';
-        });
-      });
-    });
-  </script>
+  <script src="./scripts/app.js"></script>
 </body>
 </html>
