@@ -38,6 +38,7 @@
 
 /* --- Tablet (≤ 768px) --- */
 @media (max-width: 768px) {
+
   /* Topbar: logo kiri, hamburger kanan */
   .topbar {
     grid-template-columns: 1fr auto;
@@ -214,8 +215,16 @@
     font-size: clamp(22px, 7vw, 30px);
   }
 
+  .photo-shell {
+    padding: 12px;
+    min-height: auto;
+    /* Membatalkan tinggi minimum dari desktop */
+  }
+
   .photo-shell img {
-    height: 240px;
+    height: auto;
+    min-height: 240px;
+    max-height: 350px;
   }
 
   /* Hero icons: 2 kolom */

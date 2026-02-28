@@ -33,20 +33,62 @@
   }
 
   /* ========================================
-     2. Menu Filter
+     2. Menu Filter & Load More
      ======================================== */
   const filterButtons = document.querySelectorAll('.filter-btn');
-  const menuCards = document.querySelectorAll('.menu-card');
+  const menuCards = Array.from(document.querySelectorAll('.menu-card'));
+  const btnLoadMore = document.getElementById('btn-load-more');
+  const menuActionsContainer = document.getElementById('menu-actions-container');
 
+  const itemsPerLoad = 6;
+  let currentlyShown = itemsPerLoad;
+  let currentCategory = 'all';
+
+  // Fungsi untuk me-render card sesuai kategori & batasan jumlah
+  const renderMenuCards = () => {
+    // Saring card berdasarkan kategori saat ini
+    const filteredCards = menuCards.filter((card) => {
+      if (currentCategory === 'all') return true;
+      return card.dataset.category === currentCategory;
+    });
+
+    // Sembunyikan semua card terlebih dahulu
+    menuCards.forEach(card => card.style.display = 'none');
+
+    // Tampilkan hanya sebanyak `currentlyShown` dari card yang sudah difilter
+    filteredCards.slice(0, currentlyShown).forEach((card) => {
+      card.style.display = 'flex';
+    });
+
+    // Cek apakah masih ada card tersisa untuk ditampilkan
+    if (currentlyShown >= filteredCards.length) {
+      menuActionsContainer.style.display = 'none';
+    } else {
+      menuActionsContainer.style.display = 'block';
+    }
+  };
+
+  // Inisialisasi awal
+  renderMenuCards();
+
+  // Event listener tombol load more (tampilkan lebih banyak)
+  if (btnLoadMore) {
+    btnLoadMore.addEventListener('click', () => {
+      currentlyShown += itemsPerLoad;
+      renderMenuCards();
+    });
+  }
+
+  // Event listener untuk tombol filter kategori
   filterButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       filterButtons.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
-      const category = btn.dataset.filter;
-      menuCards.forEach((card) => {
-        const match = category === 'all' || card.dataset.category === category;
-        card.style.display = match ? 'flex' : 'none';
-      });
+      
+      currentCategory = btn.dataset.filter;
+      currentlyShown = itemsPerLoad; // Reset jumlah tampilan ke awal setiap ganti kategori
+      
+      renderMenuCards();
     });
   });
 
